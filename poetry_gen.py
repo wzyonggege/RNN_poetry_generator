@@ -145,16 +145,13 @@ def train(data, model):
             pointer = 0
             for batche in range(data.n_size):
                 n += 1
-                start = time.time()
                 feed_dict = {model.x_tf: data.x_batches[pointer], model.y_tf: data.y_batches[pointer]}
                 pointer += 1
                 train_loss, _, _ = sess.run([model.cost, model.final_state, model.train_op], feed_dict=feed_dict)
-                end = time.time()
                 sys.stdout.write('\r')
-                info = "{}/{} (epoch {}), train_loss = {:.3f}, time/batch = {:.3f}" \
+                info = "{}/{} (epoch {}) | train_loss {:.3f}" \
                     .format(epoch * data.n_size + batche,
-                            epochs * data.n_size,
-                            epoch, train_loss, end - start)
+                            epochs * data.n_size, epoch, train_loss)
                 sys.stdout.write(info)
                 sys.stdout.flush()
                 # save
