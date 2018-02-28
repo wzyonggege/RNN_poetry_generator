@@ -139,6 +139,8 @@ def train(data, model):
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
         saver = tf.train.Saver(tf.global_variables())
+        model_file = tf.train.latest_checkpoint(save_dir)
+        saver.restore(sess, model_file)
         n = 0
         for epoch in range(epochs):
             sess.run(tf.assign(model.learning_rate, 0.002 * (0.97 ** epoch)))
